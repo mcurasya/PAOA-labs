@@ -1,6 +1,5 @@
 {
-    "compilerOptions": {
-        "target": "esnext",
-        "watch": true,
-    }
+  "compilerOptions": {
+    "target": "ES5"
+  }
 }

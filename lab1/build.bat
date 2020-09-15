@@ -1,0 +1,1 @@
+((tsc > NUL && node index.js > Results.txt) || echo "sorry, you dont have a typescript transpiler or node js")

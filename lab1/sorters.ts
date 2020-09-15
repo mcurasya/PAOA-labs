@@ -1,20 +1,18 @@
 export interface Sorter {
   swapsCount: number;
   comparesCount: number;
-  used: boolean;
   sort(arr: number[]): number[];
   showStats(): void;
+  toString(): string;
 }
 
 export class BubbleSorter implements Sorter {
   swapsCount: number;
   comparesCount: number;
-  used: boolean;
 
   constructor() {
     this.swapsCount = 0;
     this.comparesCount = 0;
-    this.used = false;
   }
 
   showStats(): void {
@@ -27,6 +25,8 @@ export class BubbleSorter implements Sorter {
   }
 
   sort(arr: number[]): number[] {
+    this.swapsCount = 0;
+    this.comparesCount = 0;
     let result = arr.slice();
     let changed = true;
     for (let i = 0; i < result.length && changed; ++i) {
@@ -44,17 +44,19 @@ export class BubbleSorter implements Sorter {
     }
     return result;
   }
+  
+  toString() {
+    return "Bubble sort";
+  }
 }
 
 export class MergeSorter implements Sorter {
   swapsCount: number;
   comparesCount: number;
-  used: boolean;
 
   constructor() {
     this.swapsCount = 0;
     this.comparesCount = 0;
-    this.used = false;
   }
 
   showStats(): void {
@@ -68,18 +70,20 @@ export class MergeSorter implements Sorter {
 
   sort(arr: number[]): number[] {
     throw new Error("Method not implemented.");
+  }
+
+  toString() {
+    return "Merge sort";
   }
 }
 
 export class CountingSorter implements Sorter {
   swapsCount: number;
   comparesCount: number;
-  used: boolean;
 
   constructor() {
     this.swapsCount = 0;
     this.comparesCount = 0;
-    this.used = false;
   }
 
   showStats(): void {
@@ -93,5 +97,9 @@ export class CountingSorter implements Sorter {
 
   sort(arr: number[]): number[] {
     throw new Error("Method not implemented.");
+  }
+
+  toString() {
+    return "Counting sort";
   }
 }

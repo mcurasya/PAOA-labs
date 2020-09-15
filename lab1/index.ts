@@ -10,15 +10,15 @@ function main() {
   const bs = new BubbleSorter();
   const ms = new MergeSorter();
   const cs = new CountingSorter();
-  for (let sorter of [bs]) {
+  for (let sorter of [bs, ms]) {
     console.log(sorter.toString());
     for (let size of [1000, 10000, 100000]) {
       console.log(size + " elements");
       console.log("forward array");
       sorter.sort(GenerateForwardArray(size));
       sorter.showStats();
-      sorter.sort(GenerateRandomArray(size));
       console.log("random array");
+      sorter.sort(GenerateRandomArray(size));
       sorter.showStats();
       console.log("reverse array");
       sorter.sort(GenerateReverseArray(size));

@@ -44,7 +44,7 @@ export class BubbleSorter implements Sorter {
     }
     return result;
   }
-  
+
   toString() {
     return "Bubble sort";
   }
@@ -69,7 +69,34 @@ export class MergeSorter implements Sorter {
   }
 
   sort(arr: number[]): number[] {
-    throw new Error("Method not implemented.");
+    this.swapsCount = 0;
+    this.comparesCount = 0;
+    return this.__merge_sort(arr.slice());
+  }
+
+  __merge_sort(vals: number[]): number[] {
+    if (vals.length > 1) {
+      
+      const middle = Math.floor(vals.length / 2);
+      let left_subarr = vals.slice(0, middle);
+      let right_subarr = vals.slice(middle, vals.length);
+      left_subarr = this.__merge_sort(left_subarr);
+      right_subarr = this.__merge_sort(right_subarr);
+      vals = [];
+
+      while (left_subarr.length > 0 && right_subarr.length > 0) {
+        this.comparesCount++;
+        if (left_subarr[0] < right_subarr[0]) {
+          vals.push(left_subarr.shift());
+        } else {
+          vals.push(right_subarr.shift());
+        }
+      }
+
+      vals = vals.concat(left_subarr);
+      vals = vals.concat(right_subarr);
+    }
+    return vals;
   }
 
   toString() {

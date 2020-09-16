@@ -76,7 +76,6 @@ export class MergeSorter implements Sorter {
 
   __merge_sort(vals: number[]): number[] {
     if (vals.length > 1) {
-      
       const middle = Math.floor(vals.length / 2);
       let left_subarr = vals.slice(0, middle);
       let right_subarr = vals.slice(middle, vals.length);
@@ -87,14 +86,18 @@ export class MergeSorter implements Sorter {
       while (left_subarr.length > 0 && right_subarr.length > 0) {
         this.comparesCount++;
         if (left_subarr[0] < right_subarr[0]) {
+          this.swapsCount++;
           vals.push(left_subarr.shift());
         } else {
+          this.swapsCount++;
           vals.push(right_subarr.shift());
         }
       }
 
       vals = vals.concat(left_subarr);
+      this.swapsCount+=left_subarr.length;
       vals = vals.concat(right_subarr);
+      this.swapsCount+=right_subarr.length;
     }
     return vals;
   }

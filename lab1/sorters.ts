@@ -1,4 +1,4 @@
-export interface Sorter {
+interface Sorter {
   swapsCount: number;
   comparesCount: number;
   sort(arr: number[]): number[];
@@ -95,9 +95,9 @@ export class MergeSorter implements Sorter {
       }
 
       vals = vals.concat(left_subarr);
-      this.swapsCount+=left_subarr.length;
+      this.swapsCount += left_subarr.length;
       vals = vals.concat(right_subarr);
-      this.swapsCount+=right_subarr.length;
+      this.swapsCount += right_subarr.length;
     }
     return vals;
   }
@@ -119,14 +119,30 @@ export class CountingSorter implements Sorter {
   showStats(): void {
     console.table([
       {
-        "amount of swaps": this.swapsCount,
+        "amount of copies": this.swapsCount,
         "amount of comparisons": this.comparesCount,
       },
     ]);
   }
 
   sort(arr: number[]): number[] {
-    throw new Error("Method not implemented.");
+    this.swapsCount = 0;
+    let counter = Array<number>(Math.max(...arr) + 1);
+    let result: number[] = [];
+    for (let i = 0; i < counter.length; i++) {
+      counter[i] = 0;
+    }
+
+    for (const elem of arr) {
+      counter[elem]++;
+    }
+    counter.forEach((val: number, index: number) => {
+      this.swapsCount += val;
+      for (let i = 0; i < val; ++i) {
+        result.push(index);
+      }
+    });
+    return result;
   }
 
   toString() {

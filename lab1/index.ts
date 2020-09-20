@@ -1,4 +1,4 @@
-import { Sorter, BubbleSorter, MergeSorter, CountingSorter } from "./sorters";
+import { BubbleSorter, MergeSorter, CountingSorter } from "./sorters";
 import {
   GenerateForwardArray,
   GenerateRandomArray,
@@ -10,7 +10,7 @@ function main() {
   const bs = new BubbleSorter();
   const ms = new MergeSorter();
   const cs = new CountingSorter();
-  for (let sorter of [bs, ms]) {
+  for (let sorter of [bs, ms, cs]) {
     console.log(sorter.toString());
     for (let size of [1000, 10000, 100000]) {
       console.log(size + " elements");

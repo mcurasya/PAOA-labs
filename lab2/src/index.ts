@@ -4,6 +4,7 @@ const nodesContainer = document.getElementById("tree") as HTMLDivElement;
 const balanceDiv = document.getElementById("balance-status") as HTMLDivElement;
 const balanceButton = document.getElementById("balance") as HTMLButtonElement;
 const button = document.getElementById("btn") as HTMLButtonElement;
+const clearButton = document.getElementById("clear") as HTMLButtonElement;
 const tree = new Tree();
 
 valueField.addEventListener("keyup", (event) => {
@@ -12,6 +13,12 @@ valueField.addEventListener("keyup", (event) => {
 
     button.click();
   }
+});
+
+clearButton.addEventListener("click", () => {
+  tree.root = undefined;
+  nodesContainer.innerHTML = "";
+  RenderTree(tree.root, nodesContainer);
 });
 
 function onSubmit() {

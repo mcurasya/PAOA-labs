@@ -2,8 +2,8 @@ import { Tree, TreeNode } from "./tree";
 const valueField = document.getElementById("value") as HTMLInputElement;
 const nodesContainer = document.getElementById("tree") as HTMLDivElement;
 const balanceDiv = document.getElementById("balance-status") as HTMLDivElement;
-const tree = new Tree();
 const button = document.getElementById("btn") as HTMLButtonElement;
+const tree = new Tree();
 
 valueField.addEventListener("keyup", (event) => {
   if (event.key == "Enter") {
@@ -53,6 +53,8 @@ function RenderTree(node: TreeNode, DOMNode: HTMLDivElement) {
 }
 
 function balance() {}
+
+button.addEventListener("click", onSubmit);
 
 for (const a of [15, 14, 0, 10, 8, 2, 26, 11, 4, 25, 3, 6, 28, 29, 16, 18]) {
   tree.insert(a);

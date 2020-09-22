@@ -44,9 +44,9 @@ async function balanceTree() {
   tree.root = undefined;
   for (const value of values) {
     tree.insert(value, true);
-    await sleep(Math.round(secs * 1000));
     nodesContainer.innerHTML = "";
     RenderTree(tree.root, nodesContainer);
+    await sleep(Math.round(secs * 1000));
   }
 }
 

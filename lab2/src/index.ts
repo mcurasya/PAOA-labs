@@ -3,23 +3,53 @@ const valueField = document.getElementById("value") as HTMLInputElement;
 const nodesContainer = document.getElementById("tree") as HTMLDivElement;
 const balanceDiv = document.getElementById("balance-status") as HTMLDivElement;
 const balanceButton = document.getElementById("balance") as HTMLButtonElement;
+const balanceDelayInput = document.getElementById(
+  "balance-delay"
+) as HTMLInputElement;
 const button = document.getElementById("btn") as HTMLButtonElement;
 const clearButton = document.getElementById("clear") as HTMLButtonElement;
 const tree = new Tree();
 
+function sleep(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 valueField.addEventListener("keyup", (event) => {
   if (event.key == "Enter") {
     event.preventDefault();
-
     button.click();
   }
 });
 
 clearButton.addEventListener("click", () => {
   tree.root = undefined;
+
   nodesContainer.innerHTML = "";
   RenderTree(tree.root, nodesContainer);
 });
+
+async function balanceTree() {
+  const values = tree.getSortedArray();
+  nodesContainer.innerHTML = "";
+  tree.root = undefined;
+  let secs: number;
+  if (balanceDelayInput.value != "") {
+    secs = parseFloat(balanceDelayInput.value);
+  } else {
+    alert("wrong time");
+    return;
+  }
+  if (secs === NaN) {
+    alert("wrong time");
+    return;
+  }
+  for (const value of values) {
+    tree.insert(value, true);
+    await sleep(Math.round(secs * 1000));
+    nodesContainer.innerHTML = "";
+    RenderTree(tree.root, nodesContainer);
+  }
+}
 
 function onSubmit() {
   const retrieved = valueField.value;
@@ -63,7 +93,7 @@ function RenderTree(node: TreeNode, DOMNode: HTMLDivElement) {
 function balance() {}
 
 button.addEventListener("click", onSubmit);
-balanceButton.addEventListener("click", balance);
+balanceButton.addEventListener("click", balanceTree);
 
 for (const a of [15, 14, 0, 10, 8, 2, 26, 11, 4, 25, 3, 6, 28, 29, 16, 18]) {
   tree.insert(a);

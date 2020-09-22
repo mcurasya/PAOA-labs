@@ -1,4 +1,8 @@
 
+* {
+  transition: display 0.5s;
+}
+
 div.input {
   border: solid greenyellow 5px;
   padding: 20px;

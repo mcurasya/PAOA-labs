@@ -15,21 +15,38 @@ export class Tree {
     this.root = undefined;
   }
 
-  insert(val: number) {
-    this.root = this.__insert(val, this.root);
+  insert(val: number, balance_tree = false) {
+    this.root = this.__insert(val, this.root, balance_tree);
   }
 
-  __insert(val: number, root: TreeNode): TreeNode {
-    if (root == undefined) {
+  __insert(val: number, node: TreeNode, balance_tree = false): TreeNode {
+    if (node == undefined) {
       return new TreeNode(val);
-    } else if (val < root.value) {
-      root.left = this.__insert(val, root.left);
+    } else if (val < node.value) {
+      node.left = this.__insert(val, node.left, balance_tree);
     } else {
-      root.right = this.__insert(val, root.right);
+      node.right = this.__insert(val, node.right, balance_tree);
     }
-    root.height =
-      Math.max(this.getHeight(root.left), this.getHeight(root.right)) + 1;
-    return root;
+    node.height =
+      Math.max(this.getHeight(node.left), this.getHeight(node.right)) + 1;
+    if (balance_tree) {
+      const balance = this.getBalance(node);
+      if (balance > 1 && val < node.left.value) {
+        return this.rightRotate(node);
+      }
+      if (balance < -1 && val > node.right.value) {
+        return this.leftRotate(node);
+      }
+      if (balance > 1 && val > node.left.value) {
+        node.left = this.leftRotate(node);
+        return this.rightRotate(node);
+      }
+      if (balance < -1 && val < node.right.value) {
+        node.right = this.rightRotate(node);
+        return this.leftRotate(node);
+      }
+    }
+    return node;
   }
 
   getHeight(node: TreeNode) {
@@ -39,14 +56,6 @@ export class Tree {
     return node.height;
   }
 
-  isBalanced() {
-    return this.__isBalanced(this.root);
-  }
-
-  __isBalanced(root: TreeNode): boolean {
-    throw new Error("not yet implemented");
-  }
-
   getBalance(node: TreeNode) {
     if (node == undefined) {
       return 0;
@@ -54,9 +63,20 @@ export class Tree {
     return this.getHeight(node.left) - this.getHeight(node.right);
   }
 
-  balanceStep() {}
+  getSortedArray() {
+    return this.__getSortedArray(this.root);
+  }
 
-  __balanceStep(node: TreeNode) {}
+  __getSortedArray(root: TreeNode): number[] {
+    if (root == undefined) {
+      return [];
+    } else {
+      return this.__getSortedArray(root.left).concat(
+        [root.value],
+        this.__getSortedArray(root.right)
+      );
+    }
+  }
 
   leftRotate(node: TreeNode) {
     let y = node.right;
@@ -67,6 +87,7 @@ export class Tree {
     node.height =
       Math.max(this.getHeight(node.left), this.getHeight(node.right)) + 1;
     y.height = Math.max(this.getHeight(y.left), this.getHeight(y.right)) + 1;
+    return y;
   }
 
   rightRotate(node: TreeNode) {
@@ -79,5 +100,6 @@ export class Tree {
     node.height =
       Math.max(this.getHeight(node.left), this.getHeight(node.right)) + 1;
     y.height = Math.max(this.getHeight(y.left), this.getHeight(y.right)) + 1;
+    return y;
   }
 }

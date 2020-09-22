@@ -5,7 +5,7 @@ export class TreeNode {
   right: TreeNode;
   constructor(val: number) {
     this.value = val;
-    this.height = 0;
+    this.height = 1;
   }
 }
 

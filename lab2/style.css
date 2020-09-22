@@ -1,0 +1,43 @@
+
+div.input {
+  border: solid greenyellow 5px;
+  padding: 20px;
+  width: fit-content;
+  border-radius: 10px;
+}
+
+div.node {
+  flex: 1;
+}
+
+div.node-value {
+  border: solid salmon 4px;
+  padding: 10px;
+  border-radius: 10px;
+  margin: auto;
+  margin-bottom: 10px;
+  width: fit-content;
+}
+
+div.node-child {
+  flex: 1;
+}
+
+div.children-container {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+div#tree {
+  width: 100%;
+  text-align: center;
+}
+
+div.balancer {
+  margin-top: 20px;
+}
+
+h2 {
+  text-align: center;
+  width: 100%;
+}

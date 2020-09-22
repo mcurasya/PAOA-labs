@@ -14,20 +14,6 @@ function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-valueField.addEventListener("keyup", (event) => {
-  if (event.key == "Enter") {
-    event.preventDefault();
-    button.click();
-  }
-});
-
-clearButton.addEventListener("click", () => {
-  tree.root = undefined;
-
-  nodesContainer.innerHTML = "";
-  RenderTree(tree.root, nodesContainer);
-});
-
 async function balanceTree() {
   let secs: number;
   if (balanceDelayInput.value != "") {
@@ -93,6 +79,26 @@ function balance() {}
 
 button.addEventListener("click", onSubmit);
 balanceButton.addEventListener("click", balanceTree);
+valueField.addEventListener("keyup", (event) => {
+  if (event.key == "Enter") {
+    event.preventDefault();
+    button.click();
+  }
+});
+
+balanceDelayInput.addEventListener("keyup", (event) => {
+  if (event.key == "Enter") {
+    event.preventDefault();
+    balanceButton.click();
+  }
+});
+
+clearButton.addEventListener("click", () => {
+  tree.root = undefined;
+
+  nodesContainer.innerHTML = "";
+  RenderTree(tree.root, nodesContainer);
+});
 
 for (const a of [15, 14, 0, 10, 8, 2, 26, 11, 4, 25, 3, 6, 28, 29, 16, 18]) {
   tree.insert(a);

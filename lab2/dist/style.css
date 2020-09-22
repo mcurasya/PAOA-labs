@@ -12,11 +12,11 @@ div.node {
 
 div.node-value {
   border: solid salmon 4px;
-  padding: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   border-radius: 10px;
   margin: auto;
   margin-bottom: 10px;
-  width: fit-content;
 }
 
 div.node-child {

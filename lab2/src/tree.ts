@@ -43,17 +43,8 @@ export class Tree {
     return this.__isBalanced(this.root);
   }
 
-  __isBalanced(root: TreeNode) {
-    if (root == undefined) {
-      return true;
-    }
-    const lh = this.getHeight(root.left);
-    const rh = this.getHeight(root.right);
-    return (
-      Math.abs(rh - lh) <= 1 &&
-      this.__isBalanced(root.left) &&
-      this.__isBalanced(root.right)
-    );
+  __isBalanced(root: TreeNode): boolean {
+    throw new Error("not yet implemented");
   }
 
   getBalance(node: TreeNode) {
@@ -63,15 +54,9 @@ export class Tree {
     return this.getHeight(node.left) - this.getHeight(node.right);
   }
 
-  balanceStep() {
-    this.__balanceStep(this.root);
-  }
+  balanceStep() {}
 
-  __balanceStep(node: TreeNode) {
-    if (node == undefined) {
-      return;
-    }
-  }
+  __balanceStep(node: TreeNode) {}
 
   leftRotate(node: TreeNode) {
     let y = node.right;

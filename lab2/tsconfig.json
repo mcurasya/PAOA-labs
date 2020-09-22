@@ -3,6 +3,7 @@
     "target": "es5",
     "rootDir": "src",
     "outDir": "ts-build", 
-
+    "noImplicitAny": true,
+    
   }
 }

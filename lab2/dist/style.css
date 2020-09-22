@@ -1,4 +1,3 @@
-
 * {
   transition: display 0.5s;
 }
@@ -15,7 +14,7 @@ div.node {
 }
 
 div.node-value {
-  border: solid salmon 4px;
+  border: solid purple 4px;
   padding-top: 10px;
   padding-bottom: 10px;
   border-radius: 10px;
@@ -44,4 +43,10 @@ div.balancer {
 h2 {
   text-align: center;
   width: 100%;
+}
+
+input[type="text"] {
+  border: 5px solid green;
+  border-radius: 10px;
+  width: 300px;
 }

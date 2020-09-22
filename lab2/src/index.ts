@@ -29,20 +29,19 @@ clearButton.addEventListener("click", () => {
 });
 
 async function balanceTree() {
-  const values = tree.getSortedArray();
-  nodesContainer.innerHTML = "";
-  tree.root = undefined;
   let secs: number;
   if (balanceDelayInput.value != "") {
     secs = parseFloat(balanceDelayInput.value);
   } else {
-    alert("wrong time");
-    return;
+    secs = 0;
   }
   if (secs === NaN) {
     alert("wrong time");
     return;
   }
+  const values = tree.getSortedArray();
+  nodesContainer.innerHTML = "";
+  tree.root = undefined;
   for (const value of values) {
     tree.insert(value, true);
     await sleep(Math.round(secs * 1000));

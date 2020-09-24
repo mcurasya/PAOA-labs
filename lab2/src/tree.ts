@@ -5,11 +5,10 @@ export class TreeNode {
   parent: TreeNode;
   left: TreeNode;
   right: TreeNode;
-  constructor(val: number, id: number, parent: TreeNode) {
+  constructor(val: number, id: number) {
     this.value = val;
     this.height = 1;
     this.id = id;
-    this.parent = parent;
   }
 }
 
@@ -22,21 +21,17 @@ export class Tree {
   }
 
   insert(val: number, balance_tree = false) {
-    this.root = this.__insert(val, this.root, balance_tree, undefined);
+    this.root = this.__insert(val, this.root, balance_tree);
+    this.updateParents();
   }
 
-  __insert(
-    val: number,
-    node: TreeNode,
-    balance_tree = false,
-    parentNode: TreeNode
-  ): TreeNode {
+  __insert(val: number, node: TreeNode, balance_tree = false): TreeNode {
     if (node == undefined) {
-      return new TreeNode(val, this.currentId++, parentNode);
+      return new TreeNode(val, this.currentId++);
     } else if (val < node.value) {
-      node.left = this.__insert(val, node.left, balance_tree, node);
+      node.left = this.__insert(val, node.left, balance_tree);
     } else {
-      node.right = this.__insert(val, node.right, balance_tree, node);
+      node.right = this.__insert(val, node.right, balance_tree);
     }
     node.height =
       Math.max(this.getHeight(node.left), this.getHeight(node.right)) + 1;
@@ -56,7 +51,6 @@ export class Tree {
         node.right = this.rightRotate(node);
         return this.leftRotate(node);
       }
-      this.updateParents();
     }
     return node;
   }

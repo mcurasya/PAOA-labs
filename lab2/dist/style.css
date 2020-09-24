@@ -33,6 +33,7 @@ div.node-child {
 div.children-container {
   display: flex;
   justify-content: space-evenly;
+  
 }
 
 div#tree {

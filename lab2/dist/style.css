@@ -2,6 +2,10 @@
   transition: display 0.5s;
 }
 
+body {
+  font-size: 20px;
+}
+
 div.input {
   border: solid greenyellow 5px;
   padding: 20px;
@@ -14,7 +18,7 @@ div.node {
 }
 
 div.node-value {
-  border: solid purple 4px;
+  border: solid purple 3px;
   padding-top: 10px;
   padding-bottom: 10px;
   border-radius: 10px;

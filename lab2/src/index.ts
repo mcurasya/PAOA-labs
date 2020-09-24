@@ -52,15 +52,47 @@ function onSubmit() {
 }
 
 function RenderTree(node: TreeNode, DOMNode: HTMLDivElement) {
-  var valueDiv = document.createElement("div") as HTMLDivElement;
-  var ChildrenDiv = document.createElement("div") as HTMLDivElement;
+  let valueDiv = document.createElement("div") as HTMLDivElement;
+  let ChildrenDiv = document.createElement("div") as HTMLDivElement;
   if (node == undefined) {
     valueDiv.innerHTML = "";
     DOMNode.appendChild(valueDiv);
     return;
-  } else {
-    valueDiv.innerHTML = node.value.toString();
   }
+  valueDiv.innerHTML = node.value.toString();
+  valueDiv.id = node.id.toString();
+  valueDiv.onclick = (event) => {
+    event.preventDefault();
+    const leftRotation = confirm(
+      "do you want to make a left rotation? 'yes-left, no-right'"
+    );
+    const clickedId = parseInt((event.target as HTMLDivElement).id);
+    const foundNode = tree.getNodeById(clickedId);
+    if (leftRotation) {
+      if (foundNode.parent == undefined) {
+        tree.root = tree.leftRotate(tree.root);
+      } else {
+        if (foundNode.value < foundNode.parent.value) {
+          foundNode.parent.left = tree.leftRotate(foundNode);
+        } else {
+          foundNode.parent.right = tree.leftRotate(foundNode);
+        }
+      }
+    } else {
+      if (foundNode.parent == undefined) {
+        tree.root = tree.rightRotate(tree.root);
+      } else {
+        if (foundNode.value < foundNode.parent.value) {
+          foundNode.parent.left = tree.rightRotate(foundNode);
+        } else {
+          foundNode.parent.right = tree.rightRotate(foundNode);
+        }
+      }
+    }
+    tree.updateParents();
+    nodesContainer.innerHTML = "";
+    RenderTree(tree.root, nodesContainer);
+  };
   valueDiv.classList.add("node-value");
   let leftChild = document.createElement("div") as HTMLDivElement;
   let rightChild = document.createElement("div") as HTMLDivElement;
@@ -74,8 +106,6 @@ function RenderTree(node: TreeNode, DOMNode: HTMLDivElement) {
   RenderTree(node.left, ChildrenDiv.firstChild as HTMLDivElement);
   RenderTree(node.right, ChildrenDiv.lastChild as HTMLDivElement);
 }
-
-function balance() {}
 
 button.addEventListener("click", onSubmit);
 balanceButton.addEventListener("click", balanceTree);
@@ -100,7 +130,7 @@ clearButton.addEventListener("click", () => {
   RenderTree(tree.root, nodesContainer);
 });
 
-for (const a of [15, 14, 0, 10, 8, 2, 26, 11, 4, 25, 3, 6, 28, 29, 16, 18]) {
+for (const a of [15, 14, 5, 10, 8, 2, 26, 11, 4, 25, 3, 6, 28, 29, 16, 18]) {
   tree.insert(a);
 }
 RenderTree(tree.root, nodesContainer);

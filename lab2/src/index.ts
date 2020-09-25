@@ -60,33 +60,37 @@ function RenderTree(node: TreeNode, DOMNode: HTMLDivElement) {
     return;
   }
   valueDiv.innerHTML = node.value.toString();
+  valueDiv.oncontextmenu = (event) => {
+    event.preventDefault();
+    const clickedId = parseInt((event.target as HTMLDivElement).id);
+    const foundNode = tree.getNodeById(clickedId);
+    if (foundNode.parent == undefined) {
+      tree.root = tree.rightRotate(tree.root);
+    } else {
+      if (foundNode.value < foundNode.parent.value) {
+        foundNode.parent.left = tree.rightRotate(foundNode);
+      } else {
+        foundNode.parent.right = tree.rightRotate(foundNode);
+      }
+    }
+    tree.updateParents();
+    nodesContainer.innerHTML = "";
+    RenderTree(tree.root, nodesContainer);
+  };
   valueDiv.id = node.id.toString();
   valueDiv.onclick = (event) => {
     event.preventDefault();
-    const leftRotation = confirm(
-      "do you want to make a left rotation? 'yes-left, no-right'"
-    );
     const clickedId = parseInt((event.target as HTMLDivElement).id);
     const foundNode = tree.getNodeById(clickedId);
-    if (leftRotation) {
-      if (foundNode.parent == undefined) {
-        tree.root = tree.leftRotate(tree.root);
-      } else {
-        if (foundNode.value < foundNode.parent.value) {
-          foundNode.parent.left = tree.leftRotate(foundNode);
-        } else {
-          foundNode.parent.right = tree.leftRotate(foundNode);
-        }
-      }
+
+    event.preventDefault();
+    if (foundNode.parent == undefined) {
+      tree.root = tree.leftRotate(tree.root);
     } else {
-      if (foundNode.parent == undefined) {
-        tree.root = tree.rightRotate(tree.root);
+      if (foundNode.value < foundNode.parent.value) {
+        foundNode.parent.left = tree.leftRotate(foundNode);
       } else {
-        if (foundNode.value < foundNode.parent.value) {
-          foundNode.parent.left = tree.rightRotate(foundNode);
-        } else {
-          foundNode.parent.right = tree.rightRotate(foundNode);
-        }
+        foundNode.parent.right = tree.leftRotate(foundNode);
       }
     }
     tree.updateParents();
@@ -134,3 +138,4 @@ for (const a of [15, 14, 5, 10, 8, 2, 26, 11, 4, 25, 3, 6, 28, 29, 16, 18]) {
   tree.insert(a);
 }
 RenderTree(tree.root, nodesContainer);
+
